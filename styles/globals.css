@@ -4,6 +4,9 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    background-color: #232323;
+    color: #FFFFFF;
+    padding: 1rem;
 }
 
 a {
@@ -13,4 +16,160 @@ a {
 
 * {
   box-sizing: border-box;
+}
+.menuContainer{
+  grid-area: filter;
+}
+.filters{
+  background-color: #131313;
+  padding: 5px 25px;
+  border-radius: 15px;  
+}
+hr{
+  border: none;
+  border-top: 1px solid #CBCBCB;
+  opacity: 50%;
+}
+.dropDown{
+  display: block;
+  width: 100%;
+  color: #fff;
+  background-color: #232323;
+  font-size: large;
+  opacity: 1;
+  appearance: none;
+  cursor: pointer;
+  border-radius: 3px;
+  margin: 15px 0px;
+  border: none;
+  overflow: hidden;
+}
+.dropDown{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='55' viewBox='0 0 24 24' width='30' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+  background-repeat: no-repeat;
+  background-position-x: 100%;
+  background-position-y: -10px;
+  padding: 0.5rem;
+  padding-right: 2rem;
+}
+.prodContainer{
+  height: 90vh;
+  width: 100%;
+  grid-area: container;
+}
+.gridContainer{
+  display: grid;
+  grid-template-areas:'filter container container container container container';
+  grid-template-columns:  18%  70%;
+  grid-gap: 20px;
+  padding: 10px;
+}
+.slideContainer{
+  background-color: #131313;
+  display:inline;
+  width: 100%;
+  display: flex;
+  height: 190px;
+  padding: 21px 10px;
+  border-radius: 15px;
+  overflow-x: scroll;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.slideContainer::-webkit-scrollbar {
+  display: none;
+}
+.btn-right{
+  display: inline;
+  position: absolute;
+  right: -5%;
+  bottom: 45%;
+  border: none;
+  background-color: transparent;
+  color: #fff;
+  font-weight: lighter;
+  font-size: 12px;
+  margin-left: 20px;
+  -webkit-transform:scale(3,9); /* Safari and Chrome */
+    -moz-transform:scale(3,9); /* Firefox */
+    -ms-transform:scale(3,9); /* IE 9 */
+    -o-transform:scale(3,9); /* Opera */
+    transform:scale(3,9); /* W3C */
+}
+.cardContainer{
+  width: 220px;
+  height: 150px;
+  border-radius: 4.69px;
+  background-color: #232323;
+  padding: 10px;
+  display: grid;
+  grid-template-areas: 'image name '
+  'image brandName'
+  'image amount'
+  'location date'
+  'description description';
+  grid-gap: 10px;
+  grid-template-columns: 72px 150px ;
+  grid-template-rows: 5px 10px 20px 30px;
+  margin: 0px 10px;
+}
+.cardContainer:hover{
+  transform: scale(1.1);
+  transition: 0.4s;
+  cursor: pointer;
+}
+.prodImage{
+  grid-area: image;
+  width: 70px;
+  height: 70px;
+}
+.prodName{
+  grid-area: name;
+  width: 100%;
+  margin: 0px;
+  font-weight: 500;
+}
+.m-50{
+  opacity: 50%;
+  font-size: small;
+}
+.brandName{
+  grid-area: brandName;  
+}
+.amount{
+  grid-area: amount;
+  opacity: 80%;
+  font-size: medium;
+}
+.location{
+  grid-area: location;
+}
+.date{
+  grid-area: date;
+}
+.description{
+  grid-area: description;
+}
+/* Responsive */
+@media only screen and (max-width: 1143px) {
+  .prodContainer{
+    width: 75%;
+  }
+}
+@media only screen and (max-width: 900px) {
+  .gridContainer{
+    grid-template-areas:'filter '
+    'container';
+    grid-template-columns:  100%;
+    grid-gap: 20px;
+    padding: 10px;
+  }
+  .prodContainer{
+    width: 100%;
+  }
+  .btn-right{
+    right:-8%
+  }
 }
