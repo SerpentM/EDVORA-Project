@@ -163,13 +163,13 @@ hr{
     grid-template-areas:'filter '
     'container';
     grid-template-columns:  100%;
-    grid-gap: 20px;
-    padding: 10px;
+    grid-gap: 10px;
+    padding: 0px;
   }
   .prodContainer{
     width: 100%;
   }
   .btn-right{
-    right:-8%
+    right:-15%
   }
 }

@@ -6,6 +6,8 @@ import { useState, useEffect } from "react";
 export default function Home() {
   const [appData, setAppData] = useState([]);
   const [productList, setproductList] = useState([]);
+  const [objectList, setObjectList] = useState([]);
+  const [filteredObjectList, setFilteredObjectList] = useState([]);
   const [cityState, setCityState] = useState({ state: [], city: [] });
   const [filter, setFilter] = useState({ prod: "", state: "", city: "" });
   useEffect(() => {
@@ -16,23 +18,45 @@ export default function Home() {
     await fetch("https://assessment-edvora.herokuapp.com").then((res) => {
       res.json().then((data) => {
         setAppData(data);
-        console.log(data);
         const prodArray = data.map((obj) => {
           return obj.product_name;
         });
-        const stateArray = data.map((obj) => {
-          return obj.address.state;
-        });
-        const cityArray = data.map((obj) => {
-          return obj.address.city;
+        const prodObject = data.map((obj) => {
+          return { productName: obj.product_name, address: obj.address };
         });
         const unique = [...new Set(prodArray)];
-        const unique2 = [...new Set(stateArray)];
-        const unique3 = [...new Set(cityArray)];
+        // const unique2 = [...new Set(stateArray)];
+        // const unique3 = [...new Set(cityArray)];
         setproductList(unique);
-        setCityState({ state: unique2, city: unique3 });
+        setObjectList(prodObject);
+        // setCityState({ state: unique2, city: unique3 });
       });
     });
+  }
+  function filterStatesChange(e) {
+    const arr = objectList.filter((obj) => {
+      if (e.target.value === obj.productName) {
+        return obj;
+      }
+    });
+    setFilteredObjectList(arr);
+    const stateArray = arr.map((obj) => {
+      return obj.address.state;
+    });
+    const uniqueState = [...new Set(stateArray)];
+    setCityState({ state: uniqueState, city: [] });
+  }
+  function filterCitiesChange(e) {
+    const arr = filteredObjectList.filter((obj) => {
+      if (e.target.value === obj.address.state) {
+        return obj;
+      }
+    });
+    const cityArray = arr.map((obj) => {
+      return obj.address.city;
+    });
+    const uniqueCity = [...new Set(cityArray)];
+    setCityState({ ...cityState, city: uniqueCity });
   }
   return (
     <div className={styles.container}>
@@ -52,8 +76,14 @@ export default function Home() {
                 <select
                   className="dropDown"
                   id="productFilter"
+                  value={filter.prod}
                   onChange={(e) => {
-                    setFilter({ ...filter, prod: e.target.value });
+                    if (filter.city !== "" && filter.state !== "") {
+                      setFilter({ ...filter, city: "", state: "" });
+                    }
+                    setFilter({ prod: e.target.value, state: "", city: "" });
+                    filterStatesChange(e);
+                    console.log(filter);
                   }}
                 >
                   <option value="" selected>
@@ -66,8 +96,10 @@ export default function Home() {
                 <select
                   className="dropDown"
                   id="stateFilter"
+                  value={filter.state}
                   onChange={(e) => {
-                    setFilter({ ...filter, state: e.target.value });
+                    setFilter({ ...filter, state: e.target.value, city: "" });
+                    filterCitiesChange(e);
                   }}
                 >
                   <option value="" selected>
@@ -80,14 +112,12 @@ export default function Home() {
                 <select
                   className="dropDown"
                   id="cityFilter"
-                  disabled
+                  value={filter.city}
                   onChange={(e) => {
                     setFilter({ ...filter, city: e.target.value });
                   }}
                 >
-                  <option disabled selected>
-                    City
-                  </option>
+                  <option selected>City</option>
                   {cityState.city.map((obj) => {
                     return <option>{obj}</option>;
                   })}

@@ -15,6 +15,14 @@ export default function Product(props) {
                 return obj;
               }
             })
+            .filter((obj) => {
+              if (obj.address.city === props.filter.city) {
+                return obj;
+              }
+              if (props.filter.city === "") {
+                return obj;
+              }
+            })
             .map((obj, index) => {
               return (
                 <Card
